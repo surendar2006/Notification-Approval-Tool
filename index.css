@@ -1,0 +1,35 @@
+:root {
+  color-scheme: light;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  background-color: #f5f7fb;
+  color: #0f172a;
+  --font-heading: "Source Serif 4", "Georgia", serif;
+  --font-body: "Source Sans 3", "Segoe UI", sans-serif;
+  --muted: #5b677a;
+  --panel: #ffffff;
+  --line: #e2e8f0;
+  --accent: #1d4ed8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
