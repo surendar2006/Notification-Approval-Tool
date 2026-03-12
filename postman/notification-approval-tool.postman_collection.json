@@ -1,0 +1,114 @@
+{
+  "info": {
+    "name": "Notification Approval Tool API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/health"
+      }
+    },
+    {
+      "name": "Auth Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Guest User\",\n  \"email\": \"guest@college.edu\"\n}"
+        },
+        "url": "{{baseUrl}}/api/auth/login"
+      }
+    },
+    {
+      "name": "List Notifications",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{baseUrl}}/api/notifications"
+      }
+    },
+    {
+      "name": "Create Notification",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Launch update\",\n  \"requester\": \"Team A\",\n  \"channel\": \"Email\",\n  \"priority\": \"Medium\",\n  \"audience\": \"All customers\",\n  \"region\": \"Global\",\n  \"riskScore\": 40,\n  \"tags\": \"Product,Launch\",\n  \"recipients\": {\n    \"email\": \"ops@company.com\",\n    \"phone\": \"+14155550000\"\n  },\n  \"message\": \"New feature is now live.\"\n}"
+        },
+        "url": "{{baseUrl}}/api/notifications"
+      }
+    },
+    {
+      "name": "Update Notification",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Launch update edited\",\n  \"requester\": \"Team A\",\n  \"channel\": \"Email\",\n  \"priority\": \"High\",\n  \"audience\": \"All customers\",\n  \"region\": \"Global\",\n  \"riskScore\": 55,\n  \"tags\": \"Product,Launch\",\n  \"recipients\": {\n    \"email\": \"ops@company.com\",\n    \"phone\": \"+14155550000\"\n  },\n  \"message\": \"New feature is now live. Please check it out.\"\n}"
+        },
+        "url": "{{baseUrl}}/api/notifications/{{notificationId}}"
+      }
+    },
+    {
+      "name": "Change Status",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"Approved\"\n}"
+        },
+        "url": "{{baseUrl}}/api/notifications/{{notificationId}}/status"
+      }
+    },
+    {
+      "name": "Send Decision",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"decision\": \"Approved\",\n  \"note\": \"Looks good\",\n  \"notificationId\": \"{{notificationId}}\"\n}"
+        },
+        "url": "{{baseUrl}}/api/send-decision"
+      }
+    },
+    {
+      "name": "Delete Notification",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{baseUrl}}/api/notifications/{{notificationId}}"
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5174" },
+    { "key": "token", "value": "" },
+    { "key": "notificationId", "value": "" }
+  ]
+}

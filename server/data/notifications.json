@@ -1,0 +1,156 @@
+[
+  {
+    "id": "NTF-6636",
+    "title": "Leave",
+    "channel": "Email",
+    "mentor": "Megha Ranjini",
+    "requesterName": "SURENDAR R",
+    "requesterEmail": "surendarr.cd23@bitsathy.ac.in",
+    "createdByEmail": "surendarr.cd23@bitsathy.ac.in",
+    "createdAt": "2026-03-12T04:27:14.437Z",
+    "scheduledFor": "2026-03-12T04:26:00.000Z to 2026-03-13T04:27:00.000Z",
+    "priority": "Medium",
+    "status": "Approved",
+    "audience": "",
+    "region": "North America",
+    "riskScore": 50,
+    "tags": [],
+    "recipients": {
+      "email": "megharanjini401@gmail.com",
+      "phone": "+14155551006"
+    },
+    "message": "LEAVE",
+    "checklist": [
+      {
+        "label": "Brand voice approved",
+        "done": false
+      },
+      {
+        "label": "Policy review completed",
+        "done": false
+      },
+      {
+        "label": "Legal compliance check",
+        "done": false
+      },
+      {
+        "label": "QA link validation",
+        "done": false
+      }
+    ],
+    "audit": [
+      {
+        "time": "2026-03-12T04:27:14.437Z",
+        "item": "Submitted by Megha Ranjini"
+      },
+      {
+        "time": "2026-03-12T04:27:55.254Z",
+        "item": "Approved via email action by megharanjini401@gmail.com"
+      }
+    ]
+  },
+  {
+    "id": "NTF-7956",
+    "title": "Od",
+    "channel": "Email",
+    "mentor": "Megha Ranjini",
+    "requesterName": "SURENDAR R",
+    "requesterEmail": "surendarr.cd23@bitsathy.ac.in",
+    "createdByEmail": "surendarr.cd23@bitsathy.ac.in",
+    "createdAt": "2026-03-12T04:22:30.635Z",
+    "scheduledFor": "2026-03-12T04:22:00.000Z to 2026-03-20T04:22:00.000Z",
+    "priority": "Medium",
+    "status": "Pending",
+    "audience": "",
+    "region": "North America",
+    "riskScore": 50,
+    "tags": [],
+    "recipients": {
+      "email": "megharanjini401@gmail.com",
+      "phone": "+14155551006"
+    },
+    "message": "OD",
+    "checklist": [
+      {
+        "label": "Brand voice approved",
+        "done": false
+      },
+      {
+        "label": "Policy review completed",
+        "done": false
+      },
+      {
+        "label": "Legal compliance check",
+        "done": false
+      },
+      {
+        "label": "QA link validation",
+        "done": false
+      }
+    ],
+    "audit": [
+      {
+        "time": "2026-03-12T04:22:30.635Z",
+        "item": "Submitted by Megha Ranjini"
+      }
+    ]
+  },
+  {
+    "id": "NTF-5669",
+    "title": "leave",
+    "channel": "Email",
+    "mentor": "Megha Ranjini",
+    "requesterName": "SURENDAR R",
+    "requesterEmail": "surendarr.cd23@bitsathy.ac.in",
+    "createdByEmail": "surendarr.cd23@bitsathy.ac.in",
+    "createdAt": "2026-03-11T10:40:18.457Z",
+    "scheduledFor": "2026-03-11T10:40:00.000Z to 2026-03-12T10:40:00.000Z",
+    "priority": "Medium",
+    "status": "Approved",
+    "audience": "",
+    "region": "North America",
+    "riskScore": 50,
+    "tags": [],
+    "recipients": {
+      "email": "megharanjini401@gmail.com",
+      "phone": "+14155551006"
+    },
+    "message": "Going to home town",
+    "checklist": [
+      {
+        "label": "Brand voice approved",
+        "done": false
+      },
+      {
+        "label": "Policy review completed",
+        "done": false
+      },
+      {
+        "label": "Legal compliance check",
+        "done": false
+      },
+      {
+        "label": "QA link validation",
+        "done": false
+      }
+    ],
+    "audit": [
+      {
+        "time": "2026-03-11T10:40:18.457Z",
+        "item": "Submitted by Megha Ranjini"
+      },
+      {
+        "time": "2026-03-11T10:41:37.814Z",
+        "item": "Approved via email action by megharanjini401@gmail.com"
+      },
+      {
+        "time": "2026-03-11T10:46:36.394Z",
+        "item": "Rejected by Megha ranjini"
+      },
+      {
+        "time": "2026-03-11T10:47:00.437Z",
+        "item": "Approved by Megha ranjini"
+      }
+    ]
+  }
+]
