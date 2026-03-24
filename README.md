@@ -23,6 +23,7 @@ npm install
 
 - `JWT_SECRET` is required for auth.
 - `TWILIO_*` vars are required for the decision SMS endpoint.
+- `BLOB_READ_WRITE_TOKEN` enables persistent storage on Vercel deployments.
 
 3. Run backend:
 
@@ -37,6 +38,13 @@ npm run dev
 ```
 
 Frontend runs on `http://localhost:5173` and backend defaults to `http://localhost:5174`.
+
+## Vercel deployment notes
+
+- `vercel.json` routes `/api/*` to the Express app through `api/index.js`
+- Add `JWT_SECRET`, `CORS_ORIGIN`, and `SERVER_BASE_URL` in Vercel project environment variables
+- Add `BLOB_READ_WRITE_TOKEN` if you want notifications to persist across deploys and cold starts
+- If frontend and backend are deployed in the same Vercel project, leave `VITE_API_BASE_URL` empty
 
 ## API Testing (Postman / Thunder Client)
 
@@ -64,3 +72,10 @@ npm config set proxy http://proxy.example.com:8080
 npm config set https-proxy http://proxy.example.com:8080
 npm install
 ```
+
+Cmd Codes to Run:
+cd "C:\Users\Surendar\Downloads\Notification-Approval-Tool-18799d854c425b6bcf1e791303d62687ce4e2136\Notification-Approval-Tool-18799d854c425b6bcf1e791303d62687ce4e2136"
+
+npm.cmd run dev:server
+
+npm.cmd run dev

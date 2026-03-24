@@ -6,11 +6,13 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import path from "path";
 import twilio from "twilio";
+import { get as getBlob, put as putBlob } from "@vercel/blob";
 import { fileURLToPath } from "url";
 
 dotenv.config();
 
 const app = express();
+app.disable("x-powered-by");
 const port = process.env.PORT || 5174;
 const jwtSecret =
   process.env.JWT_SECRET ||
@@ -19,7 +21,13 @@ const serverBaseUrl = String(process.env.SERVER_BASE_URL || `http://localhost:${
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const dataDir = path.join(__dirname, "data");
+const isVercel = Boolean(process.env.VERCEL);
+const blobToken = String(process.env.BLOB_READ_WRITE_TOKEN || "").trim();
+const useBlobStore = Boolean(blobToken);
+const notificationsBlobPath = "data/notifications.json";
+const bundledDataDir = path.join(__dirname, "data");
+const bundledDataFile = path.join(bundledDataDir, "notifications.json");
+const dataDir = isVercel ? path.join("/tmp", "notification-approval-tool-data") : bundledDataDir;
 const dataFile = path.join(dataDir, "notifications.json");
 
 const corsOrigins = process.env.CORS_ORIGIN
@@ -170,14 +178,77 @@ const requireEnv = (name) => {
   }
 };
 
+const readStreamToText = async (stream) => {
+  if (!stream) {
+    return "";
+  }
+
+  const response = new Response(stream);
+  return response.text();
+};
+
+const readNotificationsFromBlob = async () => {
+  const blob = await getBlob(notificationsBlobPath, {
+    access: "private",
+    token: blobToken,
+  });
+
+  if (!blob?.stream) {
+    return [];
+  }
+
+  const raw = await readStreamToText(blob.stream);
+  const parsed = JSON.parse(raw);
+  return Array.isArray(parsed) ? parsed : [];
+};
+
+const writeNotificationsToBlob = async (notifications) => {
+  await putBlob(notificationsBlobPath, JSON.stringify(notifications, null, 2), {
+    access: "private",
+    addRandomSuffix: false,
+    overwrite: true,
+    contentType: "application/json",
+    token: blobToken,
+  });
+};
+
 // "Database" connection: file-based persistence
 const connectDatabase = async () => {
+  if (useBlobStore) {
+    try {
+      const items = await readNotificationsFromBlob();
+      db.notifications = items.map(normalizeNotification);
+      db.connected = true;
+      return;
+    } catch (error) {
+      if (error?.name !== "BlobNotFoundError") {
+        throw error;
+      }
+
+      const bundledRaw = await fs.readFile(bundledDataFile, "utf8");
+      const parsed = JSON.parse(bundledRaw);
+      const items = Array.isArray(parsed) ? parsed : [];
+      db.notifications = items.map(normalizeNotification);
+      await writeNotificationsToBlob(db.notifications);
+      db.connected = true;
+      return;
+    }
+  }
+
   await fs.mkdir(dataDir, { recursive: true });
 
   try {
     await fs.access(dataFile);
   } catch {
-    await fs.writeFile(dataFile, JSON.stringify([], null, 2));
+    let initialData = [];
+    try {
+      const bundledRaw = await fs.readFile(bundledDataFile, "utf8");
+      const parsed = JSON.parse(bundledRaw);
+      initialData = Array.isArray(parsed) ? parsed : [];
+    } catch {
+      initialData = [];
+    }
+    await fs.writeFile(dataFile, JSON.stringify(initialData, null, 2));
   }
 
   const raw = await fs.readFile(dataFile, "utf8");
@@ -193,6 +264,11 @@ const connectDatabase = async () => {
 
 // Persist to JSON file
 const saveDatabase = async () => {
+  if (useBlobStore) {
+    await writeNotificationsToBlob(db.notifications);
+    return;
+  }
+
   await fs.writeFile(dataFile, JSON.stringify(db.notifications, null, 2));
 };
 
@@ -890,7 +966,13 @@ app.use((error, req, res, _next) => {
 
 await connectDatabase();
 
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Approval server running on http://localhost:${port}`);
-});
+const isDirectRun = process.argv[1] && path.resolve(process.argv[1]) === __filename;
+
+if (isDirectRun) {
+  app.listen(port, () => {
+    // eslint-disable-next-line no-console
+    console.log(`Approval server running on http://localhost:${port}`);
+  });
+}
+
+export default app;
